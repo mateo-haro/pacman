@@ -7,7 +7,7 @@ This project implements a Deep Q-Learning agent to play the MsPacman-v0 Atari ga
 1. Create a virtual environment (recommended):
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate
 ```
 
 2. Install dependencies:
