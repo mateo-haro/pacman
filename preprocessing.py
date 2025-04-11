@@ -1,22 +1,15 @@
 import numpy as np
-import cv2
 import gymnasium as gym
-from gymnasium.wrappers import FrameStack, GrayScaleObservation, ResizeObservation
+from gymnasium.wrappers import GrayscaleObservation
+from gymnasium.wrappers import FrameStackObservation
 
-def preprocess_frame(frame):
-    """Convert frame to grayscale and normalize."""
-    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
-    frame = frame.astype(np.float32) / 255.0
-    return frame
-
-def create_env():
+def create_env(render_mode, stack_size=4):
     """Create and wrap the MsPacman environment with necessary preprocessing."""
-    env = gym.make('ALE/MsPacman-v5', render_mode='rgb_array')
+    env = gym.make('ALE/MsPacman-v5', render_mode=render_mode)
     
     # Apply preprocessing wrappers
-    env = GrayScaleObservation(env)
-    env = ResizeObservation(env, 84)  # Resize to 84x84
-    env = FrameStack(env, num_stack=4)  # Stack 4 frames
+    grayscale_env = GrayscaleObservation(env)
+    env = FrameStackObservation(grayscale_env, stack_size=stack_size)  # Stack frames
     
     return env
 
